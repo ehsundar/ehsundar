@@ -1,0 +1,15 @@
+[[entries]]
+title = "blog"
+url = "blog"
+
+[[entries]]
+title = "notes"
+url = "notes"
+
+[[entries]]
+title = "trips"
+url = "trips"
+
+[[entries]]
+title = "rss"
+url = "index.xml"
