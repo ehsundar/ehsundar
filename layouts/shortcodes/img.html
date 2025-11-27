@@ -1,0 +1,9 @@
+{{ $src := .Get "src" }}
+{{ $alt := .Get "alt" }}
+{{ $width := .Get "width" }}
+{{ $class := .Get "class" }}
+
+<img src="/{{ $src }}"
+     alt="{{ $alt }}"
+     {{- if $width }} style="width: {{ $width }}; max-width: 100%;"{{ end }}
+     {{- if $class }} class="{{ $class }}"{{ end }}>

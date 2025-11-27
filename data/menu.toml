@@ -11,5 +11,9 @@ title = "trips"
 url = "trips"
 
 [[entries]]
+title = "resume"
+url = "resume.pdf"
+
+[[entries]]
 title = "rss"
 url = "index.xml"
