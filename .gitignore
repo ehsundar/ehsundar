@@ -1,0 +1,24 @@
+# Hugo build artifacts
+/public/
+/resources/_gen/
+
+# Hugo lock file
+.hugo_build.lock
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# Themes
+themes/*/public/
+themes/*/resources/_gen/
+
+# Hugo lock file
+themes/*/.hugo_build.lock
