@@ -5,5 +5,5 @@
 
 <img src="/{{ $src }}"
      alt="{{ $alt }}"
-     {{- if $width }} style="width: {{ $width }}; max-width: 100%;"{{ end }}
+     {{- if $width }} style="width: {{ $width }}; max-width: 100%; border-radius: 8px;"{{ else }} style="border-radius: 8px;"{{ end }}
      {{- if $class }} class="{{ $class }}"{{ end }}>

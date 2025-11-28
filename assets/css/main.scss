@@ -23,6 +23,8 @@
 
   pre {
     background: $--bg-color;
+    border: thin solid $--primary-text-color;
+    border-radius: 8px;
   }
 
   code:not(pre > code) {

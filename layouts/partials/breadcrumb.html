@@ -4,10 +4,10 @@
 {{- $scratch.Set "crumbs" slice -}}
 
 {{- if .IsHome -}}
-<nav class="breadcrumb">/home/ehsandar/</nav>
+<nav class="breadcrumb">{{ $.Site.Params.theme_config.back_home_text }}/</nav>
 {{- else -}}
 <nav class="breadcrumb">
-  <a href="{{ "/" | relURL }}">/home/ehsandar</a>/
+  <a href="{{ "/" | relURL }}">{{ $.Site.Params.theme_config.back_home_text }}</a>/
   {{- range $index, $element := $path -}}
     {{- if ne $element "" -}}
       {{- $scratch.Add "crumbs" $element -}}
