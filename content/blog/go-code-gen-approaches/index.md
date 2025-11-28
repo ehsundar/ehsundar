@@ -124,16 +124,12 @@ compared to a few other popular tools.
 |:---------|:----------|-----:|----------:|------:|
 | standard | regular   | 22   | 218       | 10229 |
 | standard | small     | 9.7  | 14        | 720   |
-|          |           |      |           |       |
 | easyjson | regular   | 125  | 128       | 9794  |
 | easyjson | small     | 67   | 3         | 128   |
-|          |           |      |           |       |
 | ffjson   | regular   | 66   | 141       | 9985  |
 | ffjson   | small     | 17.6 | 10        | 488   |
-|          |           |      |           |       |
 | codec    | regular   | 55   | 434       | 19299 |
 | codec    | small     | 29   | 7         | 336   |
-|          |           |      |           |       |
 | ujson    | regular   | 103  | N/A       | N/A   |
 
 # Code Generation Stage

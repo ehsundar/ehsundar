@@ -15,12 +15,6 @@
       {{- $fullPath := printf "/%s/" $builtPath -}}
       {{- if lt $index (sub (len $path) 1) -}}
         <a href="{{ $fullPath | relURL }}">{{ $element }}</a>/
-      {{- else -}}
-        {{- if $.IsPage -}}
-          <span class="current">{{ $.Title }}</span>
-        {{- else -}}
-          <span class="current">{{ $element }}</span>/
-        {{- end -}}
       {{- end -}}
     {{- end -}}
   {{- end -}}
