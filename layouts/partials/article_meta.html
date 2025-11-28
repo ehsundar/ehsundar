@@ -2,20 +2,20 @@
     <time datetime="{{ .Date }}">
         {{ .Date | time.Format $.Site.Params.theme_config.date_format }}
     </time>
-    <span class="meta-separator">·</span>
-    <span class="meta-views-wrapper">
-        <svg class="meta-view-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <span class="separator">·</span>
+    <span class="inline-item nowrap">
+        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
             <circle cx="12" cy="12" r="3"></circle>
         </svg>
-        <span class="meta-views" data-page-id="{{ .RelPermalink }}">.. views</span>
+        <span class="count" data-page-id="{{ .RelPermalink }}">.. views</span>
     </span>
-    <span class="meta-separator">·</span>
-    <button class="meta-like-btn" data-page-id="{{ .RelPermalink }}" aria-label="Like this article">
-        <svg class="meta-heart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <span class="separator">·</span>
+    <button class="inline-btn" data-page-id="{{ .RelPermalink }}" aria-label="Like this article">
+        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
         </svg>
-        <span class="meta-like-count">.. likes</span>
+        <span class="count">.. likes</span>
     </button>
 </div>
 
@@ -92,9 +92,9 @@
         const meta = document.querySelector('.article-meta');
         if (!meta) return;
 
-        const viewsSpan = meta.querySelector('.meta-views');
-        const likeButton = meta.querySelector('.meta-like-btn');
-        const likeCountSpan = meta.querySelector('.meta-like-count');
+        const viewsSpan = meta.querySelector('.inline-item .count');
+        const likeButton = meta.querySelector('.inline-btn');
+        const likeCountSpan = likeButton ? likeButton.querySelector('.count') : null;
 
         if (!viewsSpan || !likeButton || !likeCountSpan) return;
 
@@ -122,7 +122,7 @@
 
         const isLiked = getUserLikes()[pageId] || false;
         if (isLiked) {
-            likeButton.classList.add('liked');
+            likeButton.classList.add('active');
         }
 
         likeButton.addEventListener('click', async function() {
@@ -132,7 +132,7 @@
             const wasLiked = getUserLikes()[pageId] || false;
 
             if (!wasLiked) {
-                likeButton.classList.add('liked');
+                likeButton.classList.add('active');
                 setUserLiked(pageId, true);
 
                 const newCount = await incrementCount(likeKey);
@@ -146,7 +146,7 @@
 
                 likeButton.setAttribute('aria-pressed', 'true');
             } else {
-                likeButton.classList.remove('liked');
+                likeButton.classList.remove('active');
                 setUserLiked(pageId, false);
 
                 const currentCount = parseInt(likeCountSpan.textContent);

@@ -81,27 +81,21 @@
   margin-bottom: 1.5rem;
 }
 
-.meta-separator {
+.separator {
   opacity: 0.5;
 }
 
-.meta-views-wrapper {
+.inline-item {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+.inline-item.nowrap {
   white-space: nowrap;
 }
 
-.meta-view-icon {
-  width: 1rem;
-  height: 1rem;
-}
-
-.meta-views {
-  min-width: 1rem;
-}
-
-.meta-like-btn {
+.inline-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -116,20 +110,20 @@
   transition: opacity 0.2s ease;
 }
 
-.meta-like-btn:hover {
+.inline-btn:hover {
   opacity: 1;
 }
 
-.meta-like-btn.liked .meta-heart {
+.inline-btn.active .icon {
   fill: currentColor;
 }
 
-.meta-heart {
+.icon {
   width: 1rem;
   height: 1rem;
   transition: fill 0.2s ease;
 }
 
-.meta-like-count {
+.count {
   min-width: 1rem;
 }
