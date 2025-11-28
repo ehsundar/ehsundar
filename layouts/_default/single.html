@@ -2,13 +2,9 @@
 {{ partial "breadcrumb.html" .}}
 
 <article>
-    <p class="post-meta">
-        <time datetime="{{ .Date }}">
-            {{ .Date | time.Format $.Site.Params.theme_config.date_format }}
-        </time>
-    </p>
-
     <h1>{{ .Title }}</h1>
+
+    {{ partial "article_meta.html" . }}
 
     {{ partial "language_switcher.html" . }}
 

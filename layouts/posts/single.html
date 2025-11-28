@@ -4,6 +4,8 @@
 <article>
     <h1>{{ .Title }}</h1>
 
+    {{ partial "article_meta.html" . }}
+
     {{ if .Params.toc }}
         <aside {{ if .Params.tocBorder }} class="toc" {{ end }}>
             {{ .TableOfContents }}

@@ -1,0 +1,169 @@
+<div class="article-meta">
+    <time datetime="{{ .Date }}">
+        {{ .Date | time.Format $.Site.Params.theme_config.date_format }}
+    </time>
+    <span class="meta-separator">·</span>
+    <span class="meta-views-wrapper">
+        <svg class="meta-view-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+        </svg>
+        <span class="meta-views" data-page-id="{{ .RelPermalink }}">.. views</span>
+    </span>
+    <span class="meta-separator">·</span>
+    <button class="meta-like-btn" data-page-id="{{ .RelPermalink }}" aria-label="Like this article">
+        <svg class="meta-heart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+        </svg>
+        <span class="meta-like-count">.. likes</span>
+    </button>
+</div>
+
+<script>
+(function() {
+    const API_BASE = 'https://abacus.jasoncameron.dev';
+    const NAMESPACE = 'ehsandar.ir';
+    const LIKE_STORAGE_KEY = 'article-likes';
+    const VIEW_STORAGE_KEY = 'article-views-tracked';
+
+    function getPageKey(pageId, prefix = '') {
+        const cleanKey = prefix + pageId.replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+        return cleanKey.substring(0, 64);
+    }
+
+    function getUserLikes() {
+        try {
+            return JSON.parse(localStorage.getItem(LIKE_STORAGE_KEY) || '{}');
+        } catch (e) {
+            return {};
+        }
+    }
+
+    function setUserLiked(pageId, liked) {
+        try {
+            const likes = getUserLikes();
+            likes[pageId] = liked;
+            localStorage.setItem(LIKE_STORAGE_KEY, JSON.stringify(likes));
+        } catch (e) {
+            console.error('Failed to save like state:', e);
+        }
+    }
+
+    function hasViewBeenCounted(pageId) {
+        try {
+            const tracked = JSON.parse(sessionStorage.getItem(VIEW_STORAGE_KEY) || '{}');
+            return tracked[pageId] || false;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    function markViewAsCounted(pageId) {
+        try {
+            const tracked = JSON.parse(sessionStorage.getItem(VIEW_STORAGE_KEY) || '{}');
+            tracked[pageId] = true;
+            sessionStorage.setItem(VIEW_STORAGE_KEY, JSON.stringify(tracked));
+        } catch (e) {
+            console.error('Failed to mark view as counted:', e);
+        }
+    }
+
+    async function fetchCount(pageKey) {
+        try {
+            const response = await fetch(`${API_BASE}/get/${NAMESPACE}/${pageKey}`);
+            const data = await response.json();
+            return data.value || 0;
+        } catch (e) {
+            return 0;
+        }
+    }
+
+    async function incrementCount(pageKey) {
+        try {
+            const response = await fetch(`${API_BASE}/hit/${NAMESPACE}/${pageKey}`);
+            const data = await response.json();
+            return data.value || 0;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    async function initArticleMeta() {
+        const meta = document.querySelector('.article-meta');
+        if (!meta) return;
+
+        const viewsSpan = meta.querySelector('.meta-views');
+        const likeButton = meta.querySelector('.meta-like-btn');
+        const likeCountSpan = meta.querySelector('.meta-like-count');
+
+        if (!viewsSpan || !likeButton || !likeCountSpan) return;
+
+        const pageId = viewsSpan.getAttribute('data-page-id');
+        const viewKey = getPageKey(pageId, 'views-');
+        const likeKey = getPageKey(pageId);
+
+        const hasBeenCounted = hasViewBeenCounted(pageId);
+        if (!hasBeenCounted) {
+            const viewCount = await incrementCount(viewKey);
+            if (viewCount !== null) {
+                viewsSpan.textContent = viewCount + (viewCount === 1 ? ' view' : ' views');
+                markViewAsCounted(pageId);
+            } else {
+                const fallbackCount = await fetchCount(viewKey);
+                viewsSpan.textContent = fallbackCount + (fallbackCount === 1 ? ' view' : ' views');
+            }
+        } else {
+            const viewCount = await fetchCount(viewKey);
+            viewsSpan.textContent = viewCount + (viewCount === 1 ? ' view' : ' views');
+        }
+
+        const likeCount = await fetchCount(likeKey);
+        likeCountSpan.textContent = likeCount + (likeCount === 1 ? ' like' : ' likes');
+
+        const isLiked = getUserLikes()[pageId] || false;
+        if (isLiked) {
+            likeButton.classList.add('liked');
+        }
+
+        likeButton.addEventListener('click', async function() {
+            if (likeButton.disabled) return;
+
+            likeButton.disabled = true;
+            const wasLiked = getUserLikes()[pageId] || false;
+
+            if (!wasLiked) {
+                likeButton.classList.add('liked');
+                setUserLiked(pageId, true);
+
+                const newCount = await incrementCount(likeKey);
+                if (newCount !== null) {
+                    likeCountSpan.textContent = newCount + (newCount === 1 ? ' like' : ' likes');
+                } else {
+                    const currentCount = parseInt(likeCountSpan.textContent);
+                    const updatedCount = currentCount + 1;
+                    likeCountSpan.textContent = updatedCount + (updatedCount === 1 ? ' like' : ' likes');
+                }
+
+                likeButton.setAttribute('aria-pressed', 'true');
+            } else {
+                likeButton.classList.remove('liked');
+                setUserLiked(pageId, false);
+
+                const currentCount = parseInt(likeCountSpan.textContent);
+                const updatedCount = Math.max(0, currentCount - 1);
+                likeCountSpan.textContent = updatedCount + (updatedCount === 1 ? ' like' : ' likes');
+
+                likeButton.setAttribute('aria-pressed', 'false');
+            }
+
+            likeButton.disabled = false;
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initArticleMeta);
+    } else {
+        initArticleMeta();
+    }
+})();
+</script>
