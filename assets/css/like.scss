@@ -58,6 +58,31 @@
   transition: fill 0.2s ease;
 }
 
+@keyframes like-color-gradient {
+  0%, 100% {
+    color: inherit;
+  }
+  30%, 70% {
+    color: #ff4757;
+  }
+}
+
+@keyframes draw-heart {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.inline-btn.like-intro-animation {
+  animation: like-color-gradient 2s ease-in-out;
+}
+
+.heart-path-animated {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: draw-heart 4s ease-in-out forwards;
+}
+
 .like-count {
   font-weight: bold;
   min-width: 1.5rem;
