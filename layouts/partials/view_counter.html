@@ -1,0 +1,91 @@
+<div class="view-counter">
+    <svg class="view-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+        <circle cx="12" cy="12" r="3"></circle>
+    </svg>
+    <span class="view-count" data-page-id="{{ .RelPermalink }}">...</span>
+</div>
+
+<script>
+(function() {
+    const API_BASE = 'https://abacus.jasoncameron.dev';
+    const NAMESPACE = 'ehsandar.ir';
+    const VIEW_STORAGE_KEY = 'article-views-tracked';
+
+    function getPageKey(pageId) {
+        const cleanKey = 'views-' + pageId.replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+        return cleanKey.substring(0, 64);
+    }
+
+    function hasViewBeenCounted(pageId) {
+        try {
+            const tracked = JSON.parse(sessionStorage.getItem(VIEW_STORAGE_KEY) || '{}');
+            return tracked[pageId] || false;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    function markViewAsCounted(pageId) {
+        try {
+            const tracked = JSON.parse(sessionStorage.getItem(VIEW_STORAGE_KEY) || '{}');
+            tracked[pageId] = true;
+            sessionStorage.setItem(VIEW_STORAGE_KEY, JSON.stringify(tracked));
+        } catch (e) {
+            console.error('Failed to mark view as counted:', e);
+        }
+    }
+
+    async function incrementView(pageKey) {
+        try {
+            const response = await fetch(`${API_BASE}/hit/${NAMESPACE}/${pageKey}`);
+            const data = await response.json();
+            return data.value || 0;
+        } catch (e) {
+            console.error('Failed to increment view:', e);
+            return null;
+        }
+    }
+
+    async function fetchViewCount(pageKey) {
+        try {
+            const response = await fetch(`${API_BASE}/get/${NAMESPACE}/${pageKey}`);
+            const data = await response.json();
+            return data.value || 0;
+        } catch (e) {
+            console.error('Failed to fetch view count:', e);
+            return 0;
+        }
+    }
+
+    async function initViewCounter() {
+        const countSpan = document.querySelector('.view-count');
+        if (!countSpan) return;
+
+        const pageId = countSpan.getAttribute('data-page-id');
+        const pageKey = getPageKey(pageId);
+
+        const hasBeenCounted = hasViewBeenCounted(pageId);
+
+        if (!hasBeenCounted) {
+            const count = await incrementView(pageKey);
+            if (count !== null) {
+                countSpan.textContent = count;
+                markViewAsCounted(pageId);
+            } else {
+                const fallbackCount = await fetchViewCount(pageKey);
+                countSpan.textContent = fallbackCount;
+            }
+        } else {
+            const count = await fetchViewCount(pageKey);
+            countSpan.textContent = count;
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initViewCounter);
+    } else {
+        initViewCounter();
+    }
+})();
+</script>
