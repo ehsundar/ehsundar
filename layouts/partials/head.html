@@ -22,4 +22,6 @@
   {{ $likeStyle := $likeSass | css.Sass $options | resources.Fingerprint "sha512" }}
   <link rel="stylesheet" href="{{ $likeStyle.Permalink | relURL }}" integrity="{{ $likeStyle.Data.Integrity }}" />
   {{ if .Params.mathjax }} {{ partial "mathjax.html" . }} {{ end }}
+  {{ $analytics := resources.Get "js/analytics.js" }}
+  <script src="{{ $analytics.RelPermalink }}"></script>
 </head>

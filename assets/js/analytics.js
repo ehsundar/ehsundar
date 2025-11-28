@@ -5,7 +5,8 @@ window.Analytics = (function() {
     const VIEW_STORAGE_KEY = 'article-views-tracked';
 
     function getPageKey(pageId, prefix = '') {
-        const cleanKey = prefix + pageId.replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+        const pageTitle = pageId.split('/').pop() || pageId;
+        const cleanKey = prefix + pageTitle.replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
         return cleanKey.substring(0, 64) || 'home';
     }
 
@@ -68,23 +69,35 @@ window.Analytics = (function() {
         }
     }
 
-    async function loadViews(pageId, countElement) {
+    async function loadViews(pageId, countElement = null) {
         const viewKey = getPageKey(pageId, 'views-');
         const hasBeenCounted = hasViewBeenCounted(pageId);
+        let viewCount;
 
         if (!hasBeenCounted) {
-            const viewCount = await incrementCount(viewKey);
+            viewCount = await incrementCount(viewKey);
             if (viewCount !== null) {
-                countElement.textContent = viewCount + (viewCount === 1 ? ' view' : ' views');
+                console.log(`📊 Page views for '${pageId}':`, viewCount);
                 markViewAsCounted(pageId);
             } else {
-                const fallbackCount = await fetchCount(viewKey);
-                countElement.textContent = fallbackCount + (fallbackCount === 1 ? ' view' : ' views');
+                viewCount = await fetchCount(viewKey);
+                console.log(`📊 Page views for '${pageId}':`, viewCount);
             }
         } else {
-            const viewCount = await fetchCount(viewKey);
-            countElement.textContent = viewCount + (viewCount === 1 ? ' view' : ' views');
+            viewCount = await fetchCount(viewKey);
+            console.log(`📊 Page views for '${pageId}':`, viewCount, '(already counted this session)');
         }
+
+        const countText = viewCount + (viewCount === 1 ? ' view' : ' views');
+        if (countElement) {
+            countElement.textContent = countText;
+        }
+
+        window.dispatchEvent(new CustomEvent('viewsLoaded', {
+            detail: { pageId, count: viewCount, countText }
+        }));
+
+        return viewCount;
     }
 
     async function loadLikes(pageId, countElement) {
@@ -155,10 +168,22 @@ window.Analytics = (function() {
         return getUserLikes()[pageId] || false;
     }
 
+    function init() {
+        const pageId = window.location.pathname || '/';
+        loadViews(pageId);
+    }
+
     return {
         loadViews,
         loadLikes,
         toggleLike,
-        isUserLiked
+        isUserLiked,
+        init
     };
 })();
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => Analytics.init());
+} else {
+    Analytics.init();
+}

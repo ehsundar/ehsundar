@@ -25,11 +25,9 @@
     </span>
 </div>
 
-{{ $analytics := resources.Get "js/analytics.js" }}
-<script src="{{ $analytics.RelPermalink }}"></script>
 <script>
 (function() {
-    async function initArticleMeta() {
+    function initArticleMeta() {
         const meta = document.querySelector('.article-meta');
         if (!meta) return;
 
@@ -40,16 +38,19 @@
 
         if (!viewsSpan || !likeButton || !likedText) return;
 
-        await Analytics.loadViews(pageId, viewsSpan);
+        window.addEventListener('viewsLoaded', function(event) {
+            if (event.detail.pageId !== pageId) return;
+            viewsSpan.textContent = event.detail.countText;
+        });
 
         if (Analytics.isUserLiked(pageId)) {
             likeButton.style.display = 'none';
             likedText.style.display = 'inline-flex';
             const likedCountSpan = likedText.querySelector('.count');
-            await Analytics.loadLikes(pageId, likedCountSpan);
+            Analytics.loadLikes(pageId, likedCountSpan);
         } else {
             const likeCountSpan = likeButton.querySelector('.count');
-            await Analytics.loadLikes(pageId, likeCountSpan);
+            Analytics.loadLikes(pageId, likeCountSpan);
             likeButton.addEventListener('click', function() {
                 Analytics.toggleLike(pageId, likeButton, likeCountSpan, {
                     activeClass: 'active',

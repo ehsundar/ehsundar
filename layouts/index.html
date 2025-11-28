@@ -9,7 +9,4 @@
 {{ .Content }}
 {{ partial "menu_item.html" (dict "context" . "collection" $.Site.Data.menu.entries) }}
 
-{{ $pageTracker := resources.Get "js/page_tracker.js" }}
-<script src="{{ $pageTracker.RelPermalink }}"></script>
-
 {{ end }}
