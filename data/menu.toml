@@ -1,5 +1,13 @@
 [[entries]]
-title = "blog"
+title = "About"
+url = "about"
+[[entries]]
+title = "Resume"
+url = "AmirEhsandarResume.pdf"
+
+
+[[entries]]
+title = "Blog"
 url = "blog"
 [entries.post_list]
 section = "blog"
@@ -9,7 +17,7 @@ show_more_text = "more..."
 show_more_url = "blog"
 
 [[entries]]
-title = "notes"
+title = "Notes"
 url = "notes"
 [entries.post_list]
 section = "notes"
@@ -19,7 +27,7 @@ show_more_text = "more..."
 show_more_url = "notes"
 
 [[entries]]
-title = "trips"
+title = "Trips"
 url = "trips"
 [entries.post_list]
 section = "trips"
@@ -27,10 +35,3 @@ limit = 3
 show_more = true
 show_more_text = "more..."
 show_more_url = "trips"
-
-[[entries]]
-title = "about"
-url = "about"
-[[entries.entries]]
-title = "resume"
-url = "resume.pdf"
