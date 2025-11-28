@@ -88,7 +88,7 @@ window.Analytics = (function() {
             console.log(`📊 Page views for '${pageId}':`, viewCount, '(already counted this session)');
         }
 
-        const countText = viewCount + (viewCount === 1 ? ' view' : ' views');
+        const countText = viewCount.toString();
         if (countElement) {
             countElement.textContent = countText;
         }
