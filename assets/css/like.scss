@@ -35,6 +35,23 @@
   animation: heartbeat 0.3s ease;
 }
 
+.like-text {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  border: 2px solid currentColor;
+  border-radius: 50px;
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.like-text .heart-icon {
+  fill: currentColor;
+}
+
 .heart-icon {
   width: 1.2rem;
   height: 1.2rem;

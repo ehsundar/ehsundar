@@ -1,20 +1,11 @@
-<div class="view-counter">
-    <svg class="view-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-        <circle cx="12" cy="12" r="3"></circle>
-    </svg>
-    <span class="view-count" data-page-id="{{ .RelPermalink }}">...</span>
-</div>
-
-<script>
 (function() {
     const API_BASE = 'https://abacus.jasoncameron.dev';
     const NAMESPACE = 'ehsandar.ir';
-    const VIEW_STORAGE_KEY = 'article-views-tracked';
+    const VIEW_STORAGE_KEY = 'page-views-tracked';
 
     function getPageKey(pageId) {
         const cleanKey = 'views-' + pageId.replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
-        return cleanKey.substring(0, 64);
+        return cleanKey.substring(0, 64) || 'views-home';
     }
 
     function hasViewBeenCounted(pageId) {
@@ -42,7 +33,6 @@
             const data = await response.json();
             return data.value || 0;
         } catch (e) {
-            console.error('Failed to increment view:', e);
             return null;
         }
     }
@@ -53,39 +43,36 @@
             const data = await response.json();
             return data.value || 0;
         } catch (e) {
-            console.error('Failed to fetch view count:', e);
             return 0;
         }
     }
 
-    async function initViewCounter() {
-        const countSpan = document.querySelector('.view-count');
-        if (!countSpan) return;
-
-        const pageId = countSpan.getAttribute('data-page-id');
+    async function trackPageView(pageId) {
         const pageKey = getPageKey(pageId);
-
         const hasBeenCounted = hasViewBeenCounted(pageId);
 
         if (!hasBeenCounted) {
             const count = await incrementView(pageKey);
             if (count !== null) {
-                countSpan.textContent = count;
+                console.log(`📊 Page views for '${pageId}':`, count);
                 markViewAsCounted(pageId);
             } else {
                 const fallbackCount = await fetchViewCount(pageKey);
-                countSpan.textContent = fallbackCount;
+                console.log(`📊 Page views for '${pageId}':`, fallbackCount);
             }
         } else {
             const count = await fetchViewCount(pageKey);
-            countSpan.textContent = count;
+            console.log(`📊 Page views for '${pageId}':`, count, '(already counted this session)');
         }
     }
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initViewCounter);
+        document.addEventListener('DOMContentLoaded', function() {
+            const pageId = window.location.pathname || '/';
+            trackPageView(pageId);
+        });
     } else {
-        initViewCounter();
+        const pageId = window.location.pathname || '/';
+        trackPageView(pageId);
     }
 })();
-</script>

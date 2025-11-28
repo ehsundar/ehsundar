@@ -1,109 +1,65 @@
-<div class="like-container">
+<div class="like-container" data-page-id="{{ .RelPermalink }}">
     <button class="like-button" data-page-id="{{ .RelPermalink }}" aria-label="Like this article">
         <svg class="heart-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
         </svg>
         <span class="like-count">...</span>
     </button>
+    <div class="like-text" style="display: none;">
+        <svg class="heart-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+        </svg>
+        <span class="like-count">...</span>
+    </div>
 </div>
 
+{{ $analytics := resources.Get "js/analytics.js" }}
+<script src="{{ $analytics.RelPermalink }}"></script>
 <script>
 (function() {
-    const STORAGE_KEY = 'article-likes';
-    const API_BASE = 'https://abacus.jasoncameron.dev';
-    const NAMESPACE = 'ehsandar.ir';
-
-    function getPageKey(pageId) {
-        const cleanKey = pageId.replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
-        return cleanKey.substring(0, 64) || 'home';
-    }
-
-    function getUserLikes() {
-        try {
-            return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-        } catch (e) {
-            return {};
-        }
-    }
-
-    function setUserLiked(pageId, liked) {
-        try {
-            const likes = getUserLikes();
-            likes[pageId] = liked;
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(likes));
-        } catch (e) {
-            console.error('Failed to save like state:', e);
-        }
-    }
-
-    async function fetchCount(pageKey) {
-        try {
-            const response = await fetch(`${API_BASE}/get/${NAMESPACE}/${pageKey}`);
-            const data = await response.json();
-            return data.value || 0;
-        } catch (e) {
-            console.error('Failed to fetch count:', e);
-            return 0;
-        }
-    }
-
-    async function incrementCount(pageKey) {
-        try {
-            const response = await fetch(`${API_BASE}/hit/${NAMESPACE}/${pageKey}`);
-            const data = await response.json();
-            return data.value || 0;
-        } catch (e) {
-            console.error('Failed to increment count:', e);
-            return null;
-        }
-    }
-
     async function initLikeButton() {
-        const button = document.querySelector('.like-button');
-        if (!button) return;
+        const container = document.querySelector('.like-container');
+        if (!container) return;
 
-        const pageId = button.getAttribute('data-page-id');
-        const pageKey = getPageKey(pageId);
-        const countSpan = button.querySelector('.like-count');
-        const userLikes = getUserLikes();
+        const button = container.querySelector('.like-button');
+        const likedText = container.querySelector('.like-text');
+        const pageId = container.getAttribute('data-page-id');
 
-        const isLiked = userLikes[pageId] || false;
-        if (isLiked) {
-            button.classList.add('liked');
+        if (Analytics.isUserLiked(pageId)) {
+            button.style.display = 'none';
+            likedText.style.display = 'flex';
+            const countSpan = likedText.querySelector('.like-count');
+            await Analytics.loadLikes(pageId, countSpan);
+        } else {
+            const countSpan = button.querySelector('.like-count');
+            await Analytics.loadLikes(pageId, countSpan);
+
+            button.addEventListener('click', function() {
+                Analytics.toggleLike(pageId, button, countSpan, {
+                    activeClass: 'liked',
+                    likedElement: likedText
+                });
+            });
         }
 
-        const count = await fetchCount(pageKey);
-        countSpan.textContent = count;
+        window.addEventListener('likeChanged', function(event) {
+            if (event.detail.pageId !== pageId) return;
 
-        button.addEventListener('click', async function() {
-            if (button.disabled) return;
-
-            button.disabled = true;
-            const wasLiked = getUserLikes()[pageId] || false;
-
-            if (!wasLiked) {
-                button.classList.add('liked');
-                setUserLiked(pageId, true);
-
-                const newCount = await incrementCount(pageKey);
-                if (newCount !== null) {
-                    countSpan.textContent = newCount;
-                } else {
-                    countSpan.textContent = parseInt(countSpan.textContent) + 1;
+            if (event.detail.liked) {
+                button.style.display = 'none';
+                likedText.style.display = 'flex';
+                const likedCountSpan = likedText.querySelector('.like-count');
+                if (likedCountSpan) {
+                    likedCountSpan.textContent = event.detail.count;
                 }
-
-                button.setAttribute('aria-pressed', 'true');
             } else {
-                button.classList.remove('liked');
-                setUserLiked(pageId, false);
-
-                const currentCount = parseInt(countSpan.textContent);
-                countSpan.textContent = Math.max(0, currentCount - 1);
-
-                button.setAttribute('aria-pressed', 'false');
+                button.style.display = 'flex';
+                likedText.style.display = 'none';
+                const buttonCountSpan = button.querySelector('.like-count');
+                if (buttonCountSpan) {
+                    buttonCountSpan.textContent = event.detail.count;
+                }
             }
-
-            button.disabled = false;
         });
     }
 
