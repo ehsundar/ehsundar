@@ -1,0 +1,28 @@
+{{- $url := urls.Parse .Permalink -}}
+{{- $path := split (trim $url.Path "/") "/" -}}
+{{- $scratch := newScratch -}}
+{{- $scratch.Set "crumbs" slice -}}
+
+{{- if .IsHome -}}
+<nav class="breadcrumb">/home/ehsandar/</nav>
+{{- else -}}
+<nav class="breadcrumb">
+  <a href="{{ "/" | relURL }}">/home/ehsandar</a>/
+  {{- range $index, $element := $path -}}
+    {{- if ne $element "" -}}
+      {{- $scratch.Add "crumbs" $element -}}
+      {{- $builtPath := delimit ($scratch.Get "crumbs") "/" -}}
+      {{- $fullPath := printf "/%s/" $builtPath -}}
+      {{- if lt $index (sub (len $path) 1) -}}
+        <a href="{{ $fullPath | relURL }}">{{ $element }}</a>/
+      {{- else -}}
+        {{- if $.IsPage -}}
+          <span class="current">{{ $.Title }}</span>
+        {{- else -}}
+          <span class="current">{{ $element }}</span>/
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+</nav>
+{{- end -}}
