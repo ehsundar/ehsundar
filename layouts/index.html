@@ -9,7 +9,4 @@
 {{ .Content }}
 {{ partial "menu_item.html" (dict "context" . "collection" $.Site.Data.menu.entries) }}
 
-<h2>Latest Posts</h2>
-{{ partial "post_list.html" (dict "context" . "limit" 5 "show_more" true "show_more_url" "/blog/" "show_more_text" "View all posts →") }}
-
 {{ end }}

@@ -1,7 +1,14 @@
 baseURL = 'https://ehsandar.ir/'
 defaultContentLanguage = 'en'
-theme = 'nostyleplease'
 pluralizeListTitles = false
+
+[params]
+  [params.theme_config]
+    appearance = "dark"
+    back_home_text = "/home/ehsandar"
+    date_format = "2006-01-02"
+    isListGroupByDate = false
+    isShowFooter = true
 
 [languages]
   [languages.en]
@@ -15,3 +22,31 @@ pluralizeListTitles = false
     languageName = 'فارسی'
     title = 'امیر احسان‌دار'
     weight = 2
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.parser]
+      [markup.goldmark.parser.attribute]
+        block = true
+        title = true
+    [markup.goldmark.renderer]
+      unsafe = true
+
+  [markup.highlight]
+    anchorLineNos = false
+    codeFences = true
+    guessSyntax = false
+    hl_inline = false
+    lineAnchors = ''
+    lineNoStart = 1
+    lineNos = false
+    lineNumbersInTable = true
+    noClasses = true
+    noHl = false
+    style = 'rrt'
+    tabWidth = 4
+
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 3
+    ordered = false
