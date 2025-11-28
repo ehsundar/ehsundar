@@ -10,6 +10,8 @@
 
     <h1>{{ .Title }}</h1>
 
+    {{ partial "language_switcher.html" . }}
+
     {{ if .Params.toc }}
         <aside {{ if .Params.tocBorder }} class="toc" {{ end }}>
             {{ .TableOfContents }}

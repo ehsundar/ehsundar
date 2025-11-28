@@ -1,0 +1,20 @@
+[notes]
+other = "notes"
+
+[blog]
+other = "blog"
+
+[trips]
+other = "trips"
+
+[resume]
+other = "resume"
+
+[rss]
+other = "rss"
+
+[readMore]
+other = "Read more"
+
+[postedOn]
+other = "Posted on"

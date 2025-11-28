@@ -179,3 +179,60 @@ details[open] summary {
 .toc {
   padding: 1rem;
 }
+
+// -------------- RTL & i18n SUPPORT -------------- //
+@import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css');
+
+html[dir="rtl"] {
+  text-align: right;
+  font-family: Vazirmatn, sans-serif;
+}
+
+html[dir="rtl"] body {
+  direction: rtl;
+  font-family: Vazirmatn, sans-serif;
+}
+
+html[dir="rtl"] .post-meta {
+  direction: rtl;
+}
+
+html[dir="rtl"] ul,
+html[dir="rtl"] ol {
+  padding-right: 2rem;
+  padding-left: 0;
+}
+
+html[dir="rtl"] blockquote {
+  border-right: 0.25rem solid;
+  border-left: none;
+  padding-right: 1rem;
+  padding-left: 0;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+html[dir="rtl"] .post-list-item {
+  direction: rtl;
+  text-align: right;
+}
+
+html[dir="rtl"] .page-content {
+  direction: rtl;
+}
+
+html[dir="rtl"] pre,
+html[dir="rtl"] code {
+  direction: ltr;
+  text-align: left;
+}
+
+.translations {
+  margin: 1rem 0;
+  font-size: 0.9rem;
+  font-family: Vazirmatn, sans-serif;
+}
+
+.translations a {
+  margin: 0 0.5rem;
+}

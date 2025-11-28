@@ -1,5 +1,17 @@
 baseURL = 'https://ehsandar.ir/'
-languageCode = 'en-us'
-title = 'Amir Ehsandar'
+defaultContentLanguage = 'en'
 theme = 'nostyleplease'
 pluralizeListTitles = false
+
+[languages]
+  [languages.en]
+    languageCode = 'en-us'
+    languageName = 'English'
+    title = 'Amir Ehsandar'
+    weight = 1
+
+  [languages.fa]
+    languageCode = 'fa-ir'
+    languageName = 'فارسی'
+    title = 'امیر احسان‌دار'
+    weight = 2

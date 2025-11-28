@@ -1,0 +1,7 @@
+{{ if .IsTranslated }}
+<div class="translations">
+  {{ range .Translations }}
+  <a href="{{ .Permalink }}">{{ .Language.LanguageName }}</a>{{ if not (eq . (index $.Translations (sub (len $.Translations) 1))) }} | {{ end }}
+  {{ end }}
+</div>
+{{ end }}
