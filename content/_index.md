@@ -6,7 +6,12 @@ draft = false
 
 {{< img src="profile.jpeg" alt="Amir Ehsandar Profile Picture" width="200px" >}}
 
-I'm Amir. I live in Tehran, Iran. I'm a software engineer and currently working at Divar. Check out my [about](/about/) page to know more about me.
+I'm Amir.
+I live in Tehran, Iran.
+I'm a Software Engineering Manager at [Divar](https://www.linkedin.com/company/divarofficial).
+I do like woodworking and hiking.
+I often hang out with my friends and mostly talk about psychological topics.
+Check out my [About Me](/about/) to learn more.
 
 <details>
 <summary>Connect</summary>
