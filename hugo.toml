@@ -5,7 +5,7 @@ pluralizeListTitles = false
 [params]
   favicon = "favicon.ico"
   [params.theme_config]
-    appearance = "dark"
+    appearance = "auto"
     back_home_text = "/home/ehsandar"
     date_format = "2006-01-02"
     isListGroupByDate = false

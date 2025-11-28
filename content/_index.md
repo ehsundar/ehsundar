@@ -8,4 +8,14 @@ draft = false
 
 I'm Amir. I live in Tehran, Iran. I'm a software engineer and currently working at Divar. Check out my [about](/about/) page to know more about me.
 
+<details>
+<summary>Connect</summary>
+
+- **Email:** [ehsandaramir@gmail.com](mailto:ehsandaramir@gmail.com)
+- **GitHub:** [ehsundar](https://github.com/ehsundar)
+- **LinkedIn:** [ehsandar](https://www.linkedin.com/in/ehsandar/)
+- **Telegram:** [@ehsandaramir](https://t.me/ehsandaramir)
+
+</details>
+
 ---
