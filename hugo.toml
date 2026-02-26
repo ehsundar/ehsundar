@@ -18,12 +18,6 @@ pluralizeListTitles = false
     title = 'Amir Ehsandar'
     weight = 1
 
-  [languages.fa]
-    languageCode = 'fa-ir'
-    languageName = 'فارسی'
-    title = 'امیر احسان‌دار'
-    weight = 2
-
 [markup]
   [markup.goldmark]
     [markup.goldmark.parser]
