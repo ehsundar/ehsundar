@@ -24,3 +24,20 @@ html[dir="rtl"] .breadcrumb {
   text-align: left;
 }
 
+[dir="rtl"] {
+  text-align: right;
+}
+
+article p[dir="rtl"],
+article h1[dir="rtl"],
+article h2[dir="rtl"],
+article h3[dir="rtl"],
+article h4[dir="rtl"],
+article h5[dir="rtl"],
+article h6[dir="rtl"],
+article blockquote[dir="rtl"],
+article li[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
