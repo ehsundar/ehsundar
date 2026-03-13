@@ -22,27 +22,24 @@ TocOpen: false
 
 ### Professional Summary
 
-Backend Software Engineer with 7+ years of experience delivering reliable systems rapidly in fast-paced environments. Specializes in Go and Python (Django), with a proven track record of shipping minimal, high-value features and iteratively improving them based on real-world feedback. Adept at down-scoping, prioritization, and enabling teams to focus on speed without sacrificing stability. Experienced in distributed system architecture, cloud-native tooling, and observability best practices. Brings hands-on mentorship, cross-team collaboration, and a relentless drive to get working software into users’ hands quickly.
+Software Engineering Manager with 8 years of professional experience delivering reliable systems quickly in fast-paced environments. Specializing in Go and Python, with a proven track record of shipping high-value features and iteratively improving them based on real-world feedback. Adept at down-scoping, prioritization, and enabling teams to focus on speed without sacrificing system reliability. Experienced in distributed systems architecture, cloud-native tooling, and observability best practices. Brings hands-on mentorship, cross-team collaboration, and a relentless drive to get quality software into users’ hands quickly.
 
 ### Technical Skills
 
-- **Languages:** Go, Python, JavaScript, C++
-- **Frameworks & Architecture:** Django, gRPC, REST, Microservices, Event-driven Systems, Domain-Driven Design
-- **Cloud/Containerization:** Kubernetes, Docker, Helm, ArgoCD
-- **Data & Messaging:** PostgreSQL, MongoDB, Redis, RabbitMQ, Kafka, AWS S3
-- **Testing & Tooling:** sqlc, mockery, golangci-lint, pytest, coverage analysis
-- **CI/CD & Automation:** GitHub Actions, Gitlab CI, Terraform
-- **Observability:** Prometheus, Grafana, OpenTelemetry
-- **Collaboration:** Agile, Scrum, Kanban, API-first development
+- **Languages:** Go with former experience on coding with Python, JavaScript and C++
+- **Frameworks & Architecture:** gRPC, REST, Microservices, Event-driven Systems, Domain-Driven Design, Django
+- **Cloud/Containerization:** Kubernetes (self-managed), Docker, Helm, ArgoCD
+- **Data & Messaging:** PostgreSQL, Redis, Kafka, AWS S3
+- **Testing & Tooling:** sqlc, mockery, golangci-lint, pytest
+- **CI/CD & Automation:** Gitlab CI, GitHub Actions
+- **Observability:** Prometheus, Grafana, and Jaeger
 
 ### Key Soft Skills
 
 - **Delivery Focused:** Strong bias toward shipping value early—skilled at breaking down complex initiatives into minimal, high-impact deliverables, ensuring steady progress and frequent releases.
-- **Down-scoping & Prioritization:** Expert at scoping features, identifying must-haves versus nice-to-haves, and rallying teams to prioritize the simplest solutions for maximum speed.
-- **Collaboration:** Drives effective cross-functional teamwork with product, ops, and data science, rapidly aligning on what’s essential for delivery and iteratively refining based on stakeholder feedback.
+- **Down-scoping & Prioritization:** Expert at scoping features, identifying must-haves versus nice-to-haves, and rallying individuals to prioritize the simplest solutions for maximum speed.
+- **Collaboration & Communication:** Drives effective cross-functional teamwork with product, ops, and data science; clearly articulates trade-offs, dependencies, and implementation plans to teams and stakeholders—facilitating alignment on what to launch now versus later.
 - **Mentorship:** Onboarded and mentored 10+ engineers, sharing strategies for balancing quality with rapid iteration and empowering others to embrace MVP thinking.
-- **Communication:** Clearly articulates trade-offs, dependencies, and implementation plans to teams and stakeholders—facilitating consensus on what to launch now versus later.
-- **Adaptability:** Thrives in dynamic, evolving environments; pivots quickly when requirements change and proactively scopes new, reduced solutions to keep momentum.
 - **Problem-Solving:** Delivers pragmatic, data-informed decisions; skilled at identifying the shortest path to a solution and optimizing systems without compromising stability.
 
 ---
