@@ -1,6 +1,6 @@
 ---
 title: "Amir Ehsandar"
-date: 2025-11-28T00:00:00+00:00
+date: 2026-10-1T00:00:00+00:00
 draft: false
 
 ShowToc: false
@@ -12,9 +12,9 @@ TocOpen: false
 
 ### Contact
 - **Email:** ehsandaramir@gmail.com
-- **Phone:** +98 910 940 3234
+- **Phone:** +374 43 459391
 - **Location:** Tehran, Iran
-- **Website:** [ehsandar.ir](https://ehsandar.ir)
+- **Website:** [ehsandar.dev](https://ehsandar.dev)
 - **GitHub:** [github.com/ehsundar](https://github.com/ehsundar)
 - **LinkedIn:** [linkedin.com/in/ehsandar](https://linkedin.com/in/ehsandar)
 
@@ -47,7 +47,7 @@ Software Engineering Manager with 8 years of professional experience delivering 
 ## Work Experience
 
 ### Divar – Classified Ads, Tehran, Iran
-*Senior Software Engineer* | Oct 2019 – Present
+*Senior Software Engineer* | Oct 2019 – July 2026
 
 **Iran’s leading classifieds platform** (40M+ MAU, 1M+ ads a day)
 
