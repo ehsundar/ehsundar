@@ -1,6 +1,6 @@
 ---
 title: "Amir Ehsandar"
-date: 2026-10-1T00:00:00+00:00
+date: 2026-10-01T00:00:00+00:00
 draft: false
 
 ShowToc: false
@@ -13,7 +13,7 @@ TocOpen: false
 ### Contact
 - **Email:** ehsandaramir@gmail.com
 - **Phone:** +374 43 459391
-- **Location:** Tehran, Iran
+- **Location:** Yerevan, Armenia
 - **Website:** [ehsandar.dev](https://ehsandar.dev)
 - **GitHub:** [github.com/ehsundar](https://github.com/ehsundar)
 - **LinkedIn:** [linkedin.com/in/ehsandar](https://linkedin.com/in/ehsandar)
