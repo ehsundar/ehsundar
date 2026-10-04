@@ -2,7 +2,7 @@
 
 Software Engineer based in Yerevan, Armenia, with 8 years of experience building reliable systems in **Python** and **Go**.
 
-[LinkedIn](https://www.linkedin.com/in/ehsandar/) · [Email](mailto:ehsandaramir@gmail.com) · [Telegram](https://t.me/ehsandaramir)
+[📄 Resume (PDF)](Amir-Ehsandar-Resume.pdf) · [LinkedIn](https://www.linkedin.com/in/ehsandar/) · [Email](mailto:ehsandaramir@gmail.com) · [Telegram](https://t.me/ehsandaramir)
 
 ### Projects
 
